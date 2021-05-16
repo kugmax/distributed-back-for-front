@@ -7,6 +7,9 @@ services:
         - 8081:8080
     networks:
         - mynet
+    depends_on:
+        - web-sockets
+
   books:
     image: lohika/bff-books-service:1.0
     container_name: bff-books-service
@@ -14,12 +17,25 @@ services:
         - 8082:8080
     networks:
         - mynet    
+    depends_on:
+        - web-sockets
+
   web-sockets:
     image: lohika/bff-web-sockets-service:1.0
     container_name: bff-web-sockets-service
     ports:
        - 8080:8080
     networks:
-        - mynet           
+        - mynet
+
+  mobile-app:
+    image: lohika/bff-mobile-app:1.0
+    container_name: bff-mobile-app
+    ports:
+       - 8084:9090
+    networks:
+        - mynet
+    depends_on:
+        - web-sockets           
 networks:
   mynet:
