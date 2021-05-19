@@ -36,6 +36,16 @@ services:
     networks:
         - mynet
     depends_on:
+        - web-sockets        
+
+  front-app:
+    image: lohika/bff-front-app:1.0
+    container_name: bff-front-app
+    ports:
+       - 8085:9091
+    networks:
+        - mynet
+    depends_on:
         - web-sockets           
 networks:
   mynet:
