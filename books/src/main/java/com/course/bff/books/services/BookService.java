@@ -27,9 +27,6 @@ public class BookService {
     @Value("${authors.url}")
     private String authorsUrl;
 
-    @Value("${auth-token}")
-    private String authToken;
-
     private final ArrayList<Book> books;
 
     public BookService() {
@@ -64,7 +61,6 @@ public class BookService {
         AsyncHttpClient client = Dsl.asyncHttpClient(clientBuilder);
         Request socketRequest = new RequestBuilder(HttpConstants.Methods.GET)
                 .setUrl(authorsUrl + authorId.toString())
-                .setHeader("Authorization", authToken)
                 .build();
 
         ListenableFuture<Response> socketFuture = client.executeRequest(socketRequest);
