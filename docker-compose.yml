@@ -59,7 +59,14 @@ services:
       networks:
           - mynet
       depends_on:
-          - frontend  
+          - frontend
+  redis:
+      image: redis
+      container_name: redis
+      ports:
+         - 6379:6379
+      networks:
+          - mynet
 
 networks:
   mynet:

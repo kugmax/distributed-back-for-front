@@ -23,7 +23,14 @@ public class AuthFilter implements GatewayFilter {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        if (!authToken.equals(getAuthHeader(exchange.getRequest()))) {
+        String header = getAuthHeader(exchange.getRequest());
+
+        System.out.println("### authToken " + authToken);
+        System.out.println("### header " + header);
+        System.out.println("### eq " + authToken.equals(header));
+
+        if (!authToken.equals(header)) {
+            System.out.println("### send forbidden ");
             ServerHttpResponse response = exchange.getResponse();
             response.setStatusCode(HttpStatus.FORBIDDEN);
             return response.setComplete();
