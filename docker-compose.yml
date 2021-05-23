@@ -32,7 +32,7 @@ services:
     image: lohika/bff-mobile-app:1.0
     container_name: bff-mobile-app
     ports:
-       - 8084:9090
+       - 8084:8080
     networks:
         - mynet
     depends_on:
@@ -42,7 +42,7 @@ services:
     image: lohika/bff-front-app:1.0
     container_name: bff-front-app
     ports:
-       - 8085:9091
+       - 8085:8080
     networks:
         - mynet
     depends_on:
@@ -52,12 +52,22 @@ services:
       image: lohika/bff-frontend-app:1.0
       container_name: bff-frontend-app
       ports:
-         - 8086:9092
+         - 8086:8080
       networks:
           - mynet
       depends_on:
           - authors  
           - books  
+
+  gateway:
+      image: lohika/bff-gateway-app:1.0
+      container_name: bff-gateway-app
+      ports:
+         - 8087:8080
+      networks:
+          - mynet
+      depends_on:
+          - frontend  
 
 networks:
   mynet:

@@ -1,0 +1,19 @@
+server:
+  port: 8080
+debug: true
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: frontend_route
+          uri: http://bff-frontend-app:8080/frontend/api/v1/
+          predicates:
+            - Path=/frontend/api/v1/**
+        - id: books_route
+          uri: http://bff-books-service:8080/api/v1/books
+          predicates:
+            - Path=/api/v1/books/*
+        - id: authors_route
+          uri: http://bff-authors-service:8080/api/v1/authors
+          predicates:
+            - Path=/api/v1/authors/*
