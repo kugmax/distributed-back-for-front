@@ -25,7 +25,7 @@ public class AuthFilter implements GatewayFilter {
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
         if (!authToken.equals(getAuthHeader(exchange.getRequest()))) {
             ServerHttpResponse response = exchange.getResponse();
-            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            response.setStatusCode(HttpStatus.FORBIDDEN);
             return response.setComplete();
         }
 
