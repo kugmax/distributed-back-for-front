@@ -22,10 +22,10 @@ public class AuthFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
 
-        if (!authToken.equals(request.getHeader(ACCESS_TOKEN_HEADER))) {
-            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
-            return;
-        }
+//        if (!authToken.equals(request.getHeader(ACCESS_TOKEN_HEADER))) {
+//            response.sendError(HttpServletResponse.SC_UNAUTHORIZED);
+//            return;
+//        }
         filterChain.doFilter(request, servletResponse);
     }
 }

@@ -11,7 +11,7 @@ public class AuthorClient {
 
     private WebClient client;
 
-    public AuthorClient(@Value("$authors.url{}") String authorsUrl) {
+    public AuthorClient(@Value("${authors.url}") String authorsUrl) {
         client = WebClient.builder().baseUrl(authorsUrl).build();
     }
 

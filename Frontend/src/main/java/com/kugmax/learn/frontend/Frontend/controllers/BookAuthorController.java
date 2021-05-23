@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping("/frontend/api/v1/")
+@RequestMapping("/frontend/api/v1")
 public class BookAuthorController {
 
     @Autowired

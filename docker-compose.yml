@@ -46,6 +46,18 @@ services:
     networks:
         - mynet
     depends_on:
-        - web-sockets           
+        - web-sockets   
+
+  frontend:
+      image: lohika/bff-frontend-app:1.0
+      container_name: bff-frontend-app
+      ports:
+         - 8086:9092
+      networks:
+          - mynet
+      depends_on:
+          - authors  
+          - books  
+
 networks:
   mynet:

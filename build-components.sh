@@ -15,10 +15,16 @@ mvn -f MobileApp/pom.xml package
 mvn -f FrontApp/pom.xml clean
 mvn -f FrontApp/pom.xml package
 
+mvn -f Frontend/pom.xml clean
+mvn -f Frontend/pom.xml package
+
 docker build -t lohika/bff-books-service:1.0 -f books/Dockerfile books
 docker build -t lohika/bff-authors-service:1.0 -f authors/Dockerfile authors
 docker build -t lohika/bff-web-sockets-service:1.0 -f web-sockets/Dockerfile web-sockets
+
 docker build -t lohika/bff-mobile-app:1.0 -f MobileApp/Dockerfile MobileApp
 docker build -t lohika/bff-front-app:1.0 -f FrontApp/Dockerfile FrontApp
+
+docker build -t lohika/bff-frontend-app:1.0 -f Frontend/Dockerfile Frontend
 
 
