@@ -8,6 +8,10 @@ spring:
   cloud:
     gateway:
       routes:
+        - id: websocket_route
+          uri: ws://bff-web-sockets-service:8080/push
+          predicates:
+            - Path=/push*
         - id: frontend_route
           uri: http://bff-frontend-app:8080/frontend/api/v1/
           predicates:
