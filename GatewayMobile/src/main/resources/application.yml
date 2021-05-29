@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8081
 debug: true
 auth-token: YWxhZGRpbjpvcGVuc2VzYW1l
 spring:

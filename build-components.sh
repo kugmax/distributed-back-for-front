@@ -21,6 +21,9 @@ mvn -f Frontend/pom.xml package
 mvn -f Gateway/pom.xml clean
 mvn -f Gateway/pom.xml package
 
+mvn -f GatewayMobile/pom.xml clean
+mvn -f GatewayMobile/pom.xml package
+
 docker build -t lohika/bff-books-service:1.0 -f books/Dockerfile books
 docker build -t lohika/bff-authors-service:1.0 -f authors/Dockerfile authors
 docker build -t lohika/bff-web-sockets-service:1.0 -f web-sockets/Dockerfile web-sockets
@@ -30,5 +33,7 @@ docker build -t lohika/bff-front-app:1.0 -f FrontApp/Dockerfile FrontApp
 
 docker build -t lohika/bff-frontend-app:1.0 -f Frontend/Dockerfile Frontend
 docker build -t lohika/bff-gateway-app:1.0 -f Gateway/Dockerfile Gateway
+docker build -t lohika/bff-gateway-mobile-app:1.0 -f GatewayMobile/Dockerfile GatewayMobile
+
 
 

@@ -67,6 +67,18 @@ services:
       depends_on:
           - frontend
           - web-sockets
+
+  gateway-mobile:
+      image: lohika/bff-gateway-mobile-app:1.0
+      container_name: bff-gateway-mobile-app
+      ports:
+         - 8081:8081
+      networks:
+          - mynet
+      depends_on:
+          - frontend
+          - web-sockets
+          
   redis:
       image: redis
       container_name: redis

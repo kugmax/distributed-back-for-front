@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Bean;
 import reactor.core.publisher.Mono;
 
 @SpringBootApplication
-public class GatewayApplication {
+public class GatewayMobileApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(GatewayApplication.class, args);
+		SpringApplication.run(GatewayMobileApplication.class, args);
 	}
 
 	@Bean
