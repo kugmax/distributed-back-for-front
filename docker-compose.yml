@@ -32,9 +32,9 @@ services:
     networks:
         - mynet
     depends_on:
-        - gateway
+        - gateway-mobile
         - web-sockets
-        - frontend     
+        - frontend-mobile  
 
   front-app:
     image: lohika/bff-front-app:1.0
@@ -76,8 +76,17 @@ services:
       networks:
           - mynet
       depends_on:
-          - frontend
+          - frontend-mobile
           - web-sockets
+
+  frontend-mobile:
+      image: lohika/bff-frontend-mobile-app:1.0
+      container_name: bff-frontend-mobile-app
+      networks:
+          - mynet
+      depends_on:
+          - authors  
+          - books  
           
   redis:
       image: redis
