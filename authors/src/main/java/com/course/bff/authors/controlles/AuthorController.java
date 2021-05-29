@@ -1,5 +1,6 @@
 package com.course.bff.authors.controlles;
 
+import com.course.bff.authors.db.RedisClient;
 import com.course.bff.authors.models.Author;
 import com.course.bff.authors.requests.CreateAuthorCommand;
 import com.course.bff.authors.responses.AuthorResponse;
@@ -36,12 +37,11 @@ import java.util.concurrent.ExecutionException;
 public class AuthorController {
     private final static Logger logger = LoggerFactory.getLogger(AuthorController.class);
     private final AuthorService authorService;
+    private final RedisClient redisClient;
 
-    @Value("${notification.url}")
-    private String notificationUrl;
-
-    public AuthorController(AuthorService authorService) {
+    public AuthorController(AuthorService authorService, RedisClient redisClient) {
         this.authorService = authorService;
+        this.redisClient = redisClient;
     }
 
     @GetMapping()
@@ -72,27 +72,10 @@ public class AuthorController {
         logger.info("Create authors");
         Author author = this.authorService.create(createAuthorCommand);
         AuthorResponse authorResponse = createAuthorResponse(author);
-        this.sendPushNotification(authorResponse);
+        redisClient.sendNotification(authorResponse);
         return authorResponse;
     }
 
-
-    private void sendPushNotification(AuthorResponse authorResponse) {
-        DefaultAsyncHttpClientConfig.Builder clientBuilder = Dsl.config().setConnectTimeout(500);
-        AsyncHttpClient client = Dsl.asyncHttpClient(clientBuilder);
-        Gson gson = new GsonBuilder().setPrettyPrinting().create();
-        Request socketRequest = new RequestBuilder(HttpConstants.Methods.POST)
-                .setUrl(notificationUrl)
-                .setBody(gson.toJson(authorResponse))
-                .build();
-
-        ListenableFuture<Response> socketFuture = client.executeRequest(socketRequest);
-        try {
-            socketFuture.get();
-        } catch (InterruptedException | ExecutionException e) {
-            logger.error("Push Notification Error", e);
-        }
-    }
 
     private AuthorResponse createAuthorResponse(Author author) {
         AuthorResponse authorResponse = new AuthorResponse();
