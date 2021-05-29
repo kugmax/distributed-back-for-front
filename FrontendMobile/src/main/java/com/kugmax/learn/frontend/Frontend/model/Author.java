@@ -1,19 +1,29 @@
 package com.kugmax.learn.frontend.Frontend.model;
 
-import java.util.UUID;
 
 public class Author {
-    private UUID id;
+    private String id;
     private String firstName;
     private String lastName;
     private String address;
     private String language;
 
-    public void setId(UUID id) {
+    public Author() {
+    }
+
+    public Author(String id, String firstName, String lastName, String address, String language) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.language = language;
+    }
+
+    public void setId(String id) {
         this.id = id;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
@@ -49,7 +59,7 @@ public class Author {
         this.language = language;
     }
 
-    public Author withId(UUID id) {
+    public Author withId(String id) {
         this.setId(id);
         return this;
     }

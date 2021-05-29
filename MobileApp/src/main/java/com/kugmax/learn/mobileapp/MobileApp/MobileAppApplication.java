@@ -1,7 +1,7 @@
 package com.kugmax.learn.mobileapp.MobileApp;
 
 import com.kugmax.learn.mobileapp.MobileApp.handlers.BookStompSessionHandler;
-import com.kugmax.learn.mobileapp.MobileApp.services.AuthorService;
+import com.kugmax.learn.mobileapp.MobileApp.services.DetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
@@ -12,8 +12,6 @@ import org.springframework.messaging.converter.StringMessageConverter;
 import org.springframework.web.socket.client.WebSocketClient;
 import org.springframework.web.socket.client.standard.StandardWebSocketClient;
 import org.springframework.web.socket.messaging.WebSocketStompClient;
-
-import java.util.Scanner;
 
 @SpringBootApplication
 public class MobileAppApplication implements CommandLineRunner {
@@ -36,7 +34,7 @@ public class MobileAppApplication implements CommandLineRunner {
 		WebSocketStompClient stompClient = new WebSocketStompClient(client);
 		stompClient.setMessageConverter(new StringMessageConverter());
 
-		stompClient.connect(notificationUlr, new BookStompSessionHandler(context.getBean(AuthorService.class)));
+		stompClient.connect(notificationUlr, new BookStompSessionHandler(context.getBean(DetailsService.class)));
 		stompClient.start();
 	}
 }

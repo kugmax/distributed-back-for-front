@@ -1,4 +1,4 @@
-package com.kugmax.learn.frontend.Frontend.responses;
+package com.kugmax.learn.mobileapp.MobileApp.responses;
 
 public class BookDetailsResponse {
     private String bookTitle;

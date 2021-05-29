@@ -2,8 +2,8 @@ package com.kugmax.learn.mobileapp.MobileApp.handlers;
 
 import com.google.gson.Gson;
 import com.kugmax.learn.mobileapp.MobileApp.responses.AuthorResponse;
-import com.kugmax.learn.mobileapp.MobileApp.services.AuthorService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.kugmax.learn.mobileapp.MobileApp.responses.BookDetailsResponse;
+import com.kugmax.learn.mobileapp.MobileApp.services.DetailsService;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -15,10 +15,10 @@ import java.util.UUID;
 
 public class BookStompSessionHandler implements StompSessionHandler {
 
-    private AuthorService authorService;
+    private DetailsService authorService;
     private Gson gson = new Gson();
 
-    public BookStompSessionHandler(AuthorService authorService) {
+    public BookStompSessionHandler(DetailsService authorService) {
         this.authorService = authorService;
     }
 
@@ -47,23 +47,15 @@ public class BookStompSessionHandler implements StompSessionHandler {
         if (payload == null) {
             return;
         }
-
         Map<String, String> message = gson.fromJson(payload.toString(), Map.class);
 
-        String title = message.get("title");
-        String authorId = message.get("authorId");
+        String bookId = message.get("id");
 
-        StringBuilder msgInfo = new StringBuilder().append("Book title: ").append(title);
+        BookDetailsResponse detailsResponse = authorService.getBookDetails(UUID.fromString(bookId)).orElseGet(BookDetailsResponse::new);
 
-        if (authorId == null) {
-            msgInfo.append(", Author is unknown");
-            System.out.println(msgInfo);
-            return;
-        }
+        StringBuilder msgInfo = new StringBuilder().append("Book title: ").append(detailsResponse.getBookTitle());
 
-        AuthorResponse author = authorService.getAuthor(UUID.fromString(authorId)).orElseGet(AuthorResponse::new);
-
-        msgInfo.append(", Author name: ").append(author.getFirstName()).append(" ").append(author.getLastName());
+        msgInfo.append(", Author name: ").append(detailsResponse.getAuthorName());
         System.out.println(msgInfo.toString());
     }
 }

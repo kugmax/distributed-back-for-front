@@ -1,5 +1,6 @@
 package com.kugmax.learn.frontend.Frontend.clients;
 
+import com.kugmax.learn.frontend.Frontend.model.Book;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
@@ -14,11 +15,11 @@ public class BookClient {
         booksClient = WebClient.builder().baseUrl(booksUrl).build();
     }
 
-    public Mono<String> getBook(String id) {
+    public Mono<Book> getBook(String id) {
        return booksClient.get()
                 .uri("/{id}", id)
                 .accept(MediaType.APPLICATION_JSON)
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(Book.class);
     }
 }

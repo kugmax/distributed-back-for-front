@@ -13,7 +13,7 @@ spring:
           predicates:
             - Path=/push*
         - id: frontend_route
-          uri: http://bff-frontend-app:8080/frontend/api/v1/
+          uri: http://bff-frontend-mobile-app:8080/frontend/api/v1/
           predicates:
             - Path=/frontend/api/v1/**
           filters:
