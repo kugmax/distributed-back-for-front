@@ -1,8 +1,8 @@
 package com.kugmax.learn.frontapp.FrontApp.handlers;
 
 import com.google.gson.Gson;
-import com.kugmax.learn.frontapp.FrontApp.responses.AuthorResponse;
-import com.kugmax.learn.frontapp.FrontApp.services.AuthorService;
+import com.kugmax.learn.frontapp.FrontApp.responses.BookDetailsResponse;
+import com.kugmax.learn.frontapp.FrontApp.services.DetailsService;
 import org.springframework.messaging.simp.stomp.StompCommand;
 import org.springframework.messaging.simp.stomp.StompHeaders;
 import org.springframework.messaging.simp.stomp.StompSession;
@@ -14,11 +14,11 @@ import java.util.UUID;
 
 public class BookStompSessionHandler implements StompSessionHandler {
 
-    private AuthorService authorService;
+    private DetailsService detailsService;
     private Gson gson = new Gson();
 
-    public BookStompSessionHandler(AuthorService authorService) {
-        this.authorService = authorService;
+    public BookStompSessionHandler(DetailsService authorService) {
+        this.detailsService = authorService;
     }
 
     @Override
@@ -49,19 +49,11 @@ public class BookStompSessionHandler implements StompSessionHandler {
 
         Map<String, String> message = gson.fromJson(payload.toString(), Map.class);
 
-        String authorId = message.get("authorId");
+        String bookId = message.get("id");
 
-        StringBuilder msgInfo = new StringBuilder("Book: ").append(payload);
+        BookDetailsResponse author = detailsService.getBookDetails(UUID.fromString(bookId)).orElseGet(BookDetailsResponse::new);
 
-        if (authorId == null) {
-            msgInfo.append(", Author is unknown");
-            System.out.println(msgInfo);
-            return;
-        }
-
-        AuthorResponse author = authorService.getAuthor(UUID.fromString(authorId)).orElseGet(AuthorResponse::new);
-
-        msgInfo.append(", Author: ").append(gson.toJson(author));
+        StringBuilder msgInfo = new StringBuilder("Book: ").append(author.getBook()).append(", Author: ").append(author.getAuthor());
         System.out.println(msgInfo.toString());
     }
 }

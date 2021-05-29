@@ -1,7 +1,7 @@
 package com.kugmax.learn.frontapp.FrontApp.services;
 
 import com.google.gson.Gson;
-import com.kugmax.learn.frontapp.FrontApp.responses.AuthorResponse;
+import com.kugmax.learn.frontapp.FrontApp.responses.BookDetailsResponse;
 import org.asynchttpclient.*;
 import org.asynchttpclient.util.HttpConstants;
 import org.springframework.beans.factory.annotation.Value;
@@ -13,18 +13,18 @@ import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 
 @Service
-public class AuthorService {
-    @Value("${authors.url}")
-    private String authorsUrl;
+public class DetailsService {
+    @Value("${details.url}")
+    private String detailsUrl;
 
     @Value("${auth-token}")
     private String authToken;
 
-    public Optional<AuthorResponse> getAuthor(UUID authorId) {
+    public Optional<BookDetailsResponse> getBookDetails(UUID bookId) {
         DefaultAsyncHttpClientConfig.Builder clientBuilder = Dsl.config().setConnectTimeout(500);
         AsyncHttpClient client = Dsl.asyncHttpClient(clientBuilder);
         Request socketRequest = new RequestBuilder(HttpConstants.Methods.GET)
-                .setUrl(authorsUrl + authorId.toString())
+                .setUrl(detailsUrl + "details/" + bookId.toString())
                 .setHeader("Authorization", authToken)
                 .build();
 
@@ -35,7 +35,7 @@ public class AuthorService {
                 return Optional.empty();
             }
 
-            AuthorResponse authorResponse = new Gson().fromJson(response.getResponseBody(), AuthorResponse.class);
+            BookDetailsResponse authorResponse = new Gson().fromJson(response.getResponseBody(), BookDetailsResponse.class);
             return Optional.of(authorResponse);
         } catch (InterruptedException | ExecutionException e) {
             return Optional.empty();
