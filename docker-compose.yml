@@ -21,6 +21,8 @@ services:
     container_name: bff-web-sockets-service
     networks:
         - mynet
+    depends_on:
+        - redis
 
   mobile-app:
     image: lohika/bff-mobile-app:1.0
